@@ -76,6 +76,7 @@ export const GlobalStyle = styled.createGlobalStyle`
 
   body {
     font-family: ${(props) => props.theme.fontFamilies.roboto};
+    color: ${(props) => props.theme.colors.gray[700]};
     background-color: ${(props) => props.theme.colors.gray[100]};
   }
 `

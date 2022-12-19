@@ -41,13 +41,13 @@ const theme: DefaultTheme = {
   },
 
   fontFamilies: {
-    baloo: 'Baloo 2, sans-serif',
-    roboto: 'Roboto, sans-serif',
+    baloo: "'Baloo 2', sans-serif",
+    roboto: "'Roboto', sans-serif",
   },
 
   lineHeights: {
-    base: '130%',
-    lg: '160%',
+    base: 1.3,
+    lg: 1.6,
   },
 }
 

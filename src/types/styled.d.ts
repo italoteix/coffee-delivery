@@ -47,8 +47,8 @@ declare module 'styled-components' {
     }
 
     lineHeights: {
-      base: string
-      lg: string
+      base: number
+      lg: number
     }
   }
 }

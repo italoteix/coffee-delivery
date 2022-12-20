@@ -2,6 +2,8 @@ import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react'
 
 import { HeroHighlight } from './partials/HeroHighlight'
 
+import coffeesData from '../../data/coffees'
+
 import heroImg from '../../assets/hero.png'
 
 import {
@@ -61,20 +63,9 @@ export function Home() {
       <section>
         <GridTitle>Nossos cafés</GridTitle>
         <Grid>
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          {coffeesData.map((coffee) => (
+            <Card key={coffee.id} coffee={coffee} />
+          ))}
         </Grid>
       </section>
     </main>

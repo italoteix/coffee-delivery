@@ -1,6 +1,6 @@
 import { ShoppingCart, Plus, Minus } from 'phosphor-react'
 
-import expressoImg from '../../../../assets/coffes/expresso.png'
+import { Coffee } from '../../../../model/coffee'
 
 import {
   AmountSelector,
@@ -13,23 +13,33 @@ import {
   Price,
 } from './styles'
 
-export function Card() {
+interface CardProps {
+  coffee: Coffee
+}
+
+export function Card({ coffee }: CardProps) {
+  const price = new Intl.NumberFormat('pt-BR', {
+    minimumFractionDigits: 2,
+  }).format(coffee.price)
+
   return (
     <Container>
       <Paper>
         <Header>
-          <img src={expressoImg} alt="" />
-          <span>TRADICIONAL</span>
+          <img src={coffee.srcImg} alt="" />
+          {coffee.tags.map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
         </Header>
 
         <Body>
-          <h6>Expresso Tradicional</h6>
-          <p>O tradicional café feito com água quente e grãos moídos</p>
+          <h6>{coffee.title}</h6>
+          <p>{coffee.description}</p>
         </Body>
 
         <Footer>
           <Price>
-            R$ <span>9,90</span>
+            R$ <span>{price}</span>
           </Price>
 
           <AmountSelector>

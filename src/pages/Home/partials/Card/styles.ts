@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   padding-top: 2.5rem;
-  max-width: 16rem;
+  width: 16rem;
 `
 
 export const Paper = styled.div`
@@ -34,6 +34,11 @@ export const Header = styled.header`
     color: ${(props) => props.theme.colors.main.dark};
     font-size: ${(props) => props.theme.fontSizes['2xs']};
     font-weight: 700;
+    text-transform: uppercase;
+
+    + span {
+      margin-left: 0.25rem;
+    }
   }
 `
 

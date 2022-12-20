@@ -4,7 +4,15 @@ import { HeroHighlight } from './partials/HeroHighlight'
 
 import heroImg from '../../assets/hero.png'
 
-import { Hero, HeroTitle, HighlightsGrid, Subtitle } from './styles'
+import {
+  Grid,
+  GridTitle,
+  Hero,
+  HeroTitle,
+  HighlightsGrid,
+  Subtitle,
+} from './styles'
+import { Card } from './partials/Card'
 
 export function Home() {
   return (
@@ -49,6 +57,26 @@ export function Home() {
           />
         </div>
       </Hero>
+
+      <section>
+        <GridTitle>Nossos cafés</GridTitle>
+        <Grid>
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </Grid>
+      </section>
     </main>
   )
 }

@@ -36,3 +36,18 @@ export const HighlightsGrid = styled.div`
   grid-template-columns: auto auto;
   gap: 1.25rem;
 `
+
+export const GridTitle = styled.h3`
+  font-family: ${(props) => props.theme.fontFamilies.baloo};
+  font-size: ${(props) => props.theme.fontSizes['3xl']};
+  font-weight: 800;
+  color: ${(props) => props.theme.colors.gray[800]};
+
+  margin-bottom: 2rem;
+`
+
+export const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem 2rem;
+`

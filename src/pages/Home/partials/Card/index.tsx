@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 import { CartContext } from '../../../../contexts/CartContext'
 import { Coffee } from '../../../../model/coffee'
+import { formatMonetaryAmount } from '../../../../utils/formatting'
 
 import {
   AmountSelector,
@@ -25,9 +26,7 @@ export function Card({ coffee }: CardProps) {
 
   const amount = cart.products[coffee.id]?.amount || 0
 
-  const price = new Intl.NumberFormat('pt-BR', {
-    minimumFractionDigits: 2,
-  }).format(coffee.price)
+  const price = formatMonetaryAmount(coffee.price)
 
   return (
     <Container>

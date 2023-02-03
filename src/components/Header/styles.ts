@@ -31,4 +31,26 @@ export const CheckoutLink = styled(NavLink)`
   margin-left: 0.75rem;
 
   background-color: ${(props) => props.theme.colors.main.light};
+
+  position: relative;
+`
+
+export const CartCounter = styled.span`
+  position: absolute;
+  top: -25%;
+  right: -25%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+
+  background-color: ${(props) => props.theme.colors.main.dark};
+
+  color: ${(props) => props.theme.colors.white};
+  font-size: ${(props) => props.theme.fontSizes.sm};
+  font-weight: 700;
 `

@@ -1,5 +1,7 @@
 import { ShoppingCart, Plus, Minus } from 'phosphor-react'
+import { useContext } from 'react'
 
+import { CartContext } from '../../../../contexts/CartContext'
 import { Coffee } from '../../../../model/coffee'
 
 import {
@@ -18,6 +20,10 @@ interface CardProps {
 }
 
 export function Card({ coffee }: CardProps) {
+  const { cart, addProduct, removeProduct } = useContext(CartContext)
+
+  const amount = cart.products[coffee.id]?.amount || 0
+
   const price = new Intl.NumberFormat('pt-BR', {
     minimumFractionDigits: 2,
   }).format(coffee.price)
@@ -43,11 +49,17 @@ export function Card({ coffee }: CardProps) {
           </Price>
 
           <AmountSelector>
-            <button title="Diminuir quantidade">
+            <button
+              title="Diminuir quantidade"
+              onClick={() => removeProduct(coffee.id)}
+            >
               <Minus />
             </button>
-            <span>1</span>
-            <button title="Aumentar quantidade">
+            <span>{amount}</span>
+            <button
+              title="Aumentar quantidade"
+              onClick={() => addProduct(coffee)}
+            >
               <Plus />
             </button>
           </AmountSelector>

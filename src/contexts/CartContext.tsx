@@ -21,7 +21,7 @@ interface CartContextType {
   resetCart: () => void
 }
 
-const CartContext = createContext({} as CartContextType)
+export const CartContext = createContext({} as CartContextType)
 
 interface CartProviderProps {
   children?: ReactNode

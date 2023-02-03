@@ -1,13 +1,18 @@
 import { MapPin, ShoppingCart } from 'phosphor-react'
+import { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useTheme } from 'styled-components'
 
 import logoImg from '../../assets/logo.svg'
+import { CartContext } from '../../contexts/CartContext'
 
-import { CheckoutLink, LocationDisplay, NavBar } from './styles'
+import { CartCounter, CheckoutLink, LocationDisplay, NavBar } from './styles'
 
 export function Header() {
   const theme = useTheme()
+  const {
+    cart: { total },
+  } = useContext(CartContext)
 
   return (
     <header>
@@ -25,6 +30,7 @@ export function Header() {
             size={22}
             color={theme.colors.main.dark}
           />
+          <CartCounter>{total}</CartCounter>
         </CheckoutLink>
       </NavBar>
     </header>

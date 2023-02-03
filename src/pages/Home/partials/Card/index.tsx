@@ -1,5 +1,6 @@
 import { ShoppingCart, Plus, Minus } from 'phosphor-react'
 import { useContext } from 'react'
+import { Link } from 'react-router-dom'
 
 import { CartContext } from '../../../../contexts/CartContext'
 import { Coffee } from '../../../../model/coffee'
@@ -64,9 +65,11 @@ export function Card({ coffee }: CardProps) {
             </button>
           </AmountSelector>
 
-          <CartButton title="Adicionar ao carrinho">
-            <ShoppingCart weight="fill" />
-          </CartButton>
+          <Link to="/checkout">
+            <CartButton title="Adicionar ao carrinho">
+              <ShoppingCart weight="fill" />
+            </CartButton>
+          </Link>
         </Footer>
       </Paper>
     </Container>

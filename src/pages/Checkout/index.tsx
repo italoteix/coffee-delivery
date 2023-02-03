@@ -5,7 +5,11 @@ import {
   MapPinLine,
   Money,
 } from 'phosphor-react'
+import { Fragment, useContext } from 'react'
 import { useTheme } from 'styled-components'
+
+import { CartContext } from '../../contexts/CartContext'
+import { formatMonetaryAmount } from '../../utils/formatting'
 import { Card } from './partials/Card'
 
 import {
@@ -28,8 +32,22 @@ import {
   Summary,
 } from './styles'
 
+const DELIVERY_FEE = 3.5
+
 export function Checkout() {
   const { colors } = useTheme()
+  const { cart, addProduct, deleteProduct, removeProduct } =
+    useContext(CartContext)
+
+  const productsTotal = Object.values(cart.products).reduce(
+    (total, product) => {
+      total = total + product.amount * product.price
+      return total
+    },
+    0,
+  )
+
+  const orderTotal = productsTotal + DELIVERY_FEE
 
   return (
     <Container>
@@ -95,23 +113,30 @@ export function Checkout() {
       <section>
         <SectionTitle>Cafés selecionados</SectionTitle>
         <Paper>
-          <Card />
-          <CardSeparator />
-          <Card />
-          <CardSeparator />
+          {Object.values(cart.products).map((product) => (
+            <Fragment key={product.id}>
+              <Card
+                product={product}
+                increaseProduct={() => addProduct(product)}
+                decreaseProduct={() => removeProduct(product.id)}
+                removeProduct={() => deleteProduct(product.id)}
+              />
+              <CardSeparator />
+            </Fragment>
+          ))}
 
           <Summary>
             <li>
               <span>Total de itens</span>
-              <span>R$ 28,70</span>
+              <span>R$ {formatMonetaryAmount(productsTotal)}</span>
             </li>
             <li>
               <span>Entrega</span>
-              <span>R$ 28,70</span>
+              <span>R$ {formatMonetaryAmount(DELIVERY_FEE)}</span>
             </li>
             <li>
               <span>Total</span>
-              <span>R$ 28,70</span>
+              <span>R$ {formatMonetaryAmount(orderTotal)}</span>
             </li>
           </Summary>
 

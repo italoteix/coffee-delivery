@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   Bank,
   CreditCard,
@@ -6,6 +7,8 @@ import {
   Money,
 } from 'phosphor-react'
 import { Fragment, useContext } from 'react'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { useTheme } from 'styled-components'
 
 import { CartContext } from '../../contexts/CartContext'
@@ -34,10 +37,30 @@ import {
 
 const DELIVERY_FEE = 3.5
 
+enum PaymentMethods {
+  CREDIT_CARD = 'CREDIT_CARD',
+  DEBIT_CARD = 'DEBIT_CARD',
+  CASH = 'CASH',
+}
+
+interface Inputs {
+  zipCode: string
+  street: string
+  houseNumber: string
+  complement: string
+  neighborhood: string
+  city: string
+  state: string
+  paymentMethod: PaymentMethods
+}
+
 export function Checkout() {
   const { colors } = useTheme()
-  const { cart, addProduct, deleteProduct, removeProduct } =
+  const navigate = useNavigate()
+  const { cart, addProduct, deleteProduct, removeProduct, resetCart } =
     useContext(CartContext)
+
+  const { register, handleSubmit } = useForm<Inputs>()
 
   const productsTotal = Object.values(cart.products).reduce(
     (total, product) => {
@@ -49,8 +72,17 @@ export function Checkout() {
 
   const orderTotal = productsTotal + DELIVERY_FEE
 
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    localStorage.setItem(
+      '@@coffee-delivery/checkout/form',
+      JSON.stringify(data),
+    )
+    resetCart()
+    navigate('/success')
+  }
+
   return (
-    <Container>
+    <Container onSubmit={handleSubmit(onSubmit)}>
       <section>
         <SectionTitle>Complete seu pedido</SectionTitle>
         <Paper>
@@ -63,13 +95,20 @@ export function Checkout() {
           </PaperHeader>
 
           <AddressFieldsContainer>
-            <PostCodeField placeholder="CEP" />
-            <StreetField placeholder="Rua" />
-            <NumberField placeholder="Número" />
-            <ComplementField placeholder="Complemento" optional />
-            <NeighborhoodField placeholder="Bairro" />
-            <CityField placeholder="Cidade" />
-            <StateField placeholder="UF" />
+            <PostCodeField placeholder="CEP" {...register('zipCode')} />
+            <StreetField placeholder="Rua" {...register('street')} />
+            <NumberField placeholder="Número" {...register('houseNumber')} />
+            <ComplementField
+              placeholder="Complemento"
+              optional
+              {...register('complement')}
+            />
+            <NeighborhoodField
+              placeholder="Bairro"
+              {...register('houseNumber')}
+            />
+            <CityField placeholder="Cidade" {...register('city')} />
+            <StateField placeholder="UF" {...register('state')} />
           </AddressFieldsContainer>
         </Paper>
 
@@ -86,21 +125,36 @@ export function Checkout() {
 
           <PaymentMethodRadioContainer>
             <PaymentMethodRadio>
-              <input type="radio" name="paymentMethod" id="" />
+              <input
+                type="radio"
+                id=""
+                value={PaymentMethods.CREDIT_CARD}
+                {...register('paymentMethod')}
+              />
               <label htmlFor="">
                 <CreditCard />
                 Cartão de crédito
               </label>
             </PaymentMethodRadio>
             <PaymentMethodRadio>
-              <input type="radio" name="paymentMethod" id="" />
+              <input
+                type="radio"
+                id=""
+                value={PaymentMethods.DEBIT_CARD}
+                {...register('paymentMethod')}
+              />
               <label htmlFor="">
                 <Bank />
                 cartão de débito
               </label>
             </PaymentMethodRadio>
             <PaymentMethodRadio>
-              <input type="radio" name="paymentMethod" id="" />
+              <input
+                type="radio"
+                id=""
+                value={PaymentMethods.CASH}
+                {...register('paymentMethod')}
+              />
               <label htmlFor="">
                 <Money />
                 dinheiro

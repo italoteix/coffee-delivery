@@ -37,13 +37,13 @@ import {
 
 const DELIVERY_FEE = 3.5
 
-enum PaymentMethods {
+export enum PaymentMethods {
   CREDIT_CARD = 'CREDIT_CARD',
   DEBIT_CARD = 'DEBIT_CARD',
   CASH = 'CASH',
 }
 
-interface Inputs {
+export interface Order {
   zipCode: string
   street: string
   houseNumber: string
@@ -60,7 +60,7 @@ export function Checkout() {
   const { cart, addProduct, deleteProduct, removeProduct, resetCart } =
     useContext(CartContext)
 
-  const { register, handleSubmit } = useForm<Inputs>()
+  const { register, handleSubmit } = useForm<Order>()
 
   const productsTotal = Object.values(cart.products).reduce(
     (total, product) => {
@@ -72,7 +72,7 @@ export function Checkout() {
 
   const orderTotal = productsTotal + DELIVERY_FEE
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<Order> = (data) => {
     localStorage.setItem(
       '@@coffee-delivery/checkout/form',
       JSON.stringify(data),

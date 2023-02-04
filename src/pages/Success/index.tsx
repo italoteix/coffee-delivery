@@ -2,11 +2,34 @@ import { CurrencyDollar, MapPin, Timer } from 'phosphor-react'
 import { useTheme } from 'styled-components'
 
 import successImg from '../../assets/success.svg'
+import { Order, PaymentMethods } from '../Checkout'
 
 import { Grid, InfoContainer, InfoItem, Subtitle, Title } from './styles'
 
+function getPaymentMethodLabel(method: PaymentMethods) {
+  switch (method) {
+    case PaymentMethods.CASH:
+      return 'Dinheiro'
+    case PaymentMethods.CREDIT_CARD:
+      return 'Cartão de Crédito'
+    case PaymentMethods.DEBIT_CARD:
+      return 'Cartão de Débito'
+    default:
+      return ''
+  }
+}
+
 export function Success() {
   const { colors } = useTheme()
+
+  const storedOrderData = localStorage.getItem(
+    '@@coffee-delivery/checkout/form',
+  )
+
+  if (!storedOrderData) return null
+
+  const orderData: Order = JSON.parse(storedOrderData)
+
   return (
     <Grid>
       <section>
@@ -23,9 +46,14 @@ export function Success() {
               </span>
               <div>
                 <p>
-                  Entrega em <strong>Rua João Daniel Martinelli, 102</strong>
+                  Entrega em{' '}
+                  <strong>
+                    {orderData.street}, {orderData.houseNumber}
+                  </strong>
                 </p>
-                <p>Farrapos - Porto Alegre, RS</p>
+                <p>
+                  {orderData.neighborhood} - {orderData.city}, {orderData.state}
+                </p>
               </div>
             </InfoItem>
 
@@ -48,7 +76,9 @@ export function Success() {
               <div>
                 <p>Pagamento na entrega</p>
                 <p>
-                  <strong>Cartão de Crédito</strong>
+                  <strong>
+                    {getPaymentMethodLabel(orderData.paymentMethod)}
+                  </strong>
                 </p>
               </div>
             </InfoItem>
